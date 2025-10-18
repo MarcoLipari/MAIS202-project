@@ -1,0 +1,55 @@
+#!/bin/bash
+# process_reddit_comments.sh
+# Description:
+#   Iterates over compressed Reddit comment files (.zst and/or .part),
+#   extracts the first 20,000 lines, converts JSON to CSV, logs errors,
+#   and deletes processed files to save space.i
+#   If extracting from .part files, can manually stop them from continuing to download if extraction succesful.
+#   Files succesfully extracted appear in comments.txt. 
+
+# ---------------------------
+# CONFIGURATION
+# ---------------------------
+
+# Root directory (can be passed as an argument or defaults to current directory)
+ROOT_DIR="${1:-$(pwd)}"
+
+COMMENTS_DIR="$ROOT_DIR/comments"
+OUTPUT_DIR="$ROOT_DIR/sampled_comments"
+LOG_FILE="$ROOT_DIR/decoderr.txt"
+COMPLETE_FILE="$ROOT_DIR/complete.txt"
+
+# Minimum file size threshold in KB (default 40MB)
+THRESHOLD_KB=$((40 * 1024))
+
+# Create necessary folders and files
+mkdir -p "$OUTPUT_DIR" "$COMMENTS_DIR"
+touch "$LOG_FILE" "$COMPLETE_FILE"
+
+# ---------------------------
+# PROCESSING LOOP
+# ---------------------------
+
+cd "$COMMENTS_DIR" || { echo "Error: could not access $COMMENTS_DIR"; exit 1; }
+
+for month in *; do
+  # Skip if not a file
+  [ -f "$month" ] || continue
+
+  filesize_kb=$(du -k "$month" | cut -f1)
+  if [ "$filesize_kb" -gt "$THRESHOLD_KB" ]; then
+    echo "Processing $month..."
+    filename=$(basename "$month" .part)
+    filename=$(basename "$filename" .zst)
+
+    # Extract, convert, and write output
+    if zstdcat --long=31 "$month" 2>>"$LOG_FILE" | head -n 20000 | jq -r '[.subreddit, .subreddit_id, .body, .created_utc] | @csv' > "$OUTPUT_DIR/$filename.csv"; then
+      echo "$filename" >> "$COMPLETE_FILE"
+      rm "$month"
+    else
+      echo "Error processing $month" >> "$LOG_FILE"
+    fi
+  fi
+done
+
+echo "Processing complete. See $LOG_FILE for errors and $COMPLETE_FILE for processed files."
