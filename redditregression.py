@@ -107,6 +107,11 @@ model = AutoModelForSequenceClassification.from_pretrained(
     config=config,
 )
 
+# Explicitly move model to GPU if available
+if torch.cuda.is_available():
+    model.to('cuda')
+
+print(f"Model device: {model.device}")
 # -------------- Training arguments --------------
 training_args = TrainingArguments(
     output_dir="./reddit_year_model",
