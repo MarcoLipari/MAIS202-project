@@ -136,7 +136,26 @@ device = next(model.parameters()).device
 print(f"Model device: {device}")
 
 # -------------- Training arguments --------------
-training_args = TrainingArguments(report_to="none",disable_tqdm=False,output_dir="/kaggle/working/reddit_year_model",num_train_epochs=3,per_device_train_batch_size=32,per_device_eval_batch_size=64,eval_strategy="epoch",save_strategy="epoch",logging_strategy="steps",logging_steps=200,logging_first_step=True,load_best_model_at_end=True,greater_is_better=False,save_total_limit=2,fp16=torch.cuda.is_available(),learning_rate=2e-5,weight_decay=0.01,warmup_ratio=0.1,dataloader_num_workers=2,dataloader_pin_memory=True)
+training_args = TrainingArguments(report_to="none",
+                                  disable_tqdm=False,
+                                  output_dir="/kaggle/working/reddit_year_model",
+                                  num_train_epochs=3,
+                                  per_device_train_batch_size=32,
+                                  per_device_eval_batch_size=64,
+                                  eval_strategy="epoch",
+                                  save_strategy="epoch",
+                                  logging_strategy="steps",
+                                  logging_steps=200,
+                                  logging_first_step=True,
+                                  load_best_model_at_end=True,
+                                  greater_is_better=False,
+                                  save_total_limit=2,
+                                  fp16=torch.cuda.is_available(),
+                                  learning_rate=2e-5,
+                                  weight_decay=0.01,
+                                  warmup_ratio=0.1,
+                                  dataloader_num_workers=2,
+                                  dataloader_pin_memory=True)
 # -------------- Metrics --------------
 
 def compute_metrics(eval_pred):
@@ -224,3 +243,4 @@ metrics = {
 with open('/kaggle/working/metrics.txt', 'w') as f:
     for k, v in metrics.items():
         f.write(f"{k}: {v:.4f}\n")
+
