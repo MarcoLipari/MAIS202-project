@@ -46,3 +46,17 @@ Reddit language evolves dramatically over time. Slang, memes, tone, formatting, 
 - Accuracy: 85.3%
 - Precision: 87.3%
 - F1: 85.5% 
+
+## Live Demo
+
+You can access the live demo of our Reddit Comment Year Classification website here:
+
+**https://nonstimulative-mercedes-unscribed.ngrok-free.dev**
+
+This temporary public link is powered by ngrok, which securely exposes our local development server to the internet so others can view the project without needing to run it locally.
+
+## About the Demo: Website
+
+The web interface provides a simple, interactive way to test our final 2-bin classification model online:
+Users can paste any Reddit comment or block of text. The model predicts whether the comment is from the 2008–2010 or 2020–2022 time period.
+The backend runs our RoBERTa-based, fine-tuned classifier (redditwebsite/model-2bin folder). The website is lightweight and designed strictly for demonstration and validation of the model. This allows instructors, collaborators, and reviewers to test the model quickly without downloading the dataset, installing dependencies, or running the Python scripts locally.
