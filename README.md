@@ -45,4 +45,4 @@ Reddit language evolves dramatically over time. Slang, memes, tone, formatting, 
 - Learning rate = 2e-5
 - Accuracy: 85.3%
 - Precision: 87.3%
-- F1: 85.5$ 
+- F1: 85.5% 
