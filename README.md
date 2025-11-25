@@ -27,6 +27,16 @@ Reddit language evolves dramatically over time. Slang, memes, tone, formatting, 
 - Less sensitivity to noise.
 - Smaller dataset requirements.
 
+## Results
+
+|Model Type            | # bins  |Accuracy | Comments|
+|----------------------|---------|--------|-----------|
+|Linear Regression     |  None   |MSE = 19| Too slow + requires a lot of data|
+|Multi-class classifier|   2     |~ 85%| Best in terms of accuracy and speed|
+|Multi-class classifier|   3     |~ 60%| Needs more epochs for better accuracy|
+|Multi-class classifier|   4     |~ 53%| Needs more data for better accuracy|
+
+
 
 ## Final Model: `redditwebsite/model-2bin`
 - RoBERTa-base
