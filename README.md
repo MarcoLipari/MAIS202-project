@@ -51,7 +51,7 @@ Reddit language evolves dramatically over time. Slang, memes, tone, formatting, 
 
 You can access the live demo of our Reddit Comment Year Classification website here:
 
-**https://nonstimulative-mercedes-unscribed.ngrok-free.dev**
+*https://mais-frontend-psi.vercel.app/#demo**
 
 This temporary public link is powered by ngrok, which securely exposes our local development server to the internet so others can view the project without needing to run it locally.
 
